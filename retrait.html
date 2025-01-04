@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Retrait d'argent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrait d'argent - Solar Green</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Styles existants inchangés */
         * {
             margin: 0;
             padding: 0;
@@ -18,7 +18,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://image.noelshack.com/fichiers/2025/01/4/1735813164-how-is-solar-energy-useful-to-us.jpg') center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://image.noelshack.com/fichiers/2025/01/4/1735813164-how-is-solar-energy-useful-to-us.jpg') center/cover;
             color: white;
             padding: 20px;
         }
@@ -33,17 +34,17 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
-        .balance-display {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
-
         h1 {
             text-align: center;
             margin-bottom: 30px;
             color: #fff;
             font-size: 2rem;
+        }
+
+        .balance-display {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
         }
 
         .form-group {
@@ -71,28 +72,6 @@
             border-color: #4CAF50;
         }
 
-        #message {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        .error {
-            background: rgba(255, 0, 0, 0.1);
-            color: #ff4444;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .success {
-            background: rgba(0, 255, 0, 0.1);
-            color: #4CAF50;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
         .submit-btn {
             width: 100%;
             padding: 15px;
@@ -113,6 +92,22 @@
 
         .submit-btn:hover:not(:disabled) {
             background: #45a049;
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff4444;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            background: rgba(0, 255, 0, 0.1);
+            color: #4CAF50;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
         }
 
         .info-box {
@@ -140,7 +135,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Solar green</h1>
+        <h1>Solar Green</h1>
         
         <div class="balance-display">
             Solde actuel: <span id="current-balance">0 FCFA</span>
@@ -175,17 +170,18 @@
                 </div>
             </div>
 
-            <button type="button" id="withdrawal-button" class="submit-btn" disabled>Valider le retrait</button>
+            <button type="button" id="withdrawal-button" class="submit-btn" disabled>
+                Valider le retrait
+            </button>
         </form>
     </div>
 
     <script type="module">
-        // Import des modules Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-        import { getDatabase, ref, get, update, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+        import { getDatabase, ref, get, update, push, serverTimestamp } 
+        from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
-        // Configuration Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyB8hezVsx76SnhCeeYi-04wIvcoV2zgoF0",
             authDomain: "solar-edge-a9bee.firebaseapp.com",
@@ -196,19 +192,27 @@
             appId: "1:373374898393:web:39afe1cfdeca18e712eec8"
         };
 
-        // Initialisation de Firebase
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const database = getDatabase(app);
 
-        // Variables globales
+        // Constants
         const MIN_WITHDRAWAL = 1000;
         const MAX_WITHDRAWAL = 850000;
         let currentBalance = 0;
         let currentUser = null;
         let userWithdrawalConfig = null;
 
-        // Fonction pour charger les données utilisateur
+        function formatAmount(amount) {
+            return amount.toLocaleString('fr-FR') + ' FCFA';
+        }
+
+        function showMessage(message, isError = true) {
+            const messageElement = document.getElementById('message');
+            messageElement.innerHTML = `<div class="${isError ? 'error' : 'success'}">${message}</div>`;
+        }
+
         async function loadUserData(userId) {
             try {
                 const configRef = ref(database, `users/${userId}/withdrawalConfig`);
@@ -232,26 +236,51 @@
             }
         }
 
-        // Fonction pour vérifier le code de retrait
         function validateWithdrawalCode(inputCode) {
-            if (!userWithdrawalConfig || !userWithdrawalConfig.code) {
-                return false;
+            return userWithdrawalConfig?.code === inputCode;
+        }
+
+        function updateWithdrawalSummary() {
+            const amountInput = document.getElementById('amount');
+            const amount = parseFloat(amountInput.value) || 0;
+            const withdrawalSummary = document.getElementById('withdrawal-summary');
+            const withdrawalCode = document.getElementById('withdrawalCode').value;
+            
+            if (amount > 0) {
+                const fees = Math.round(amount * 0.10);
+                const totalAmount = amount - fees;
+
+                document.getElementById('requested-amount').textContent = formatAmount(amount);
+                document.getElementById('fees-amount').textContent = formatAmount(fees);
+                document.getElementById('total-amount').textContent = formatAmount(totalAmount);
+                
+                withdrawalSummary.classList.add('visible');
+            } else {
+                withdrawalSummary.classList.remove('visible');
             }
-            return userWithdrawalConfig.code === inputCode;
+
+            const withdrawalButton = document.getElementById('withdrawal-button');
+
+            if (!currentUser) {
+                showMessage("Veuillez vous connecter");
+                withdrawalButton.disabled = true;
+            } else if (amount < MIN_WITHDRAWAL) {
+                showMessage(`Le montant minimum de retrait est de ${formatAmount(MIN_WITHDRAWAL)}`);
+                withdrawalButton.disabled = true;
+            } else if (amount > MAX_WITHDRAWAL) {
+                showMessage(`Le montant maximum de retrait est de ${formatAmount(MAX_WITHDRAWAL)}`);
+                withdrawalButton.disabled = true;
+            } else if (amount > currentBalance) {
+                showMessage(`Solde insuffisant. Votre solde actuel est de ${formatAmount(currentBalance)}`);
+                withdrawalButton.disabled = true;
+            } else if (!withdrawalCode) {
+                withdrawalButton.disabled = true;
+            } else {
+                document.getElementById('message').innerHTML = '';
+                withdrawalButton.disabled = false;
+            }
         }
 
-        // Fonction pour formater les montants
-        function formatAmount(amount) {
-            return amount.toLocaleString('fr-FR') + ' FCFA';
-        }
-
-        // Fonction pour afficher les messages
-        function showMessage(message, isError = true) {
-            const messageElement = document.getElementById('message');
-            messageElement.innerHTML = `<div class="${isError ? 'error' : 'success'}">${message}</div>`;
-        }
-
-        // Fonction de traitement du retrait
         async function processWithdrawal() {
             if (!currentUser) {
                 showMessage("Veuillez vous connecter");
@@ -281,11 +310,9 @@
             const newBalance = currentBalance - amount;
 
             try {
-                // Mise à jour du solde
                 const updates = {};
                 updates[`users/${currentUser.uid}/balance`] = newBalance;
 
-                // Ajout de l'entrée dans l'historique
                 const historyRef = ref(database, `users/${currentUser.uid}/withdrawalHistory`);
                 const newHistoryKey = push(historyRef).key;
                 
@@ -298,8 +325,6 @@
                 };
 
                 await update(ref(database), updates);
-
-                // Redirection vers la page d'historique
                 window.location.href = 'historique-retrait.html';
             } catch (error) {
                 console.error("Erreur lors du traitement du retrait:", error);
@@ -307,50 +332,7 @@
             }
         }
 
-        // Fonction de mise à jour du résumé
-        function updateWithdrawalSummary() {
-            const amountInput = document.getElementById('amount');
-            const amount = parseFloat(amountInput.value) || 0;
-            const withdrawalSummary = document.getElementById('withdrawal-summary');
-            const withdrawalCode = document.getElementById('withdrawalCode').value;
-            
-            if (amount > 0) {
-                const fees = Math.round(amount * 0.10);
-                const totalAmount = amount - fees;
-
-                document.getElementById('requested-amount').textContent = formatAmount(amount);
-                document.getElementById('fees-amount').textContent = formatAmount(fees);
-                document.getElementById('total-amount').textContent = formatAmount(totalAmount);
-                
-                withdrawalSummary.classList.add('visible');
-            } else {
-                withdrawalSummary.classList.remove('visible');
-            }
-
-            // Validation et activation du bouton
-            const withdrawalButton = document.getElementById('withdrawal-button');
-
-            if (!currentUser) {
-                showMessage("Veuillez vous connecter");
-                withdrawalButton.disabled = true;
-            } else if (amount < MIN_WITHDRAWAL) {
-                showMessage(`Le montant minimum de retrait est de ${formatAmount(MIN_WITHDRAWAL)}`);
-                withdrawalButton.disabled = true;
-            } else if (amount > MAX_WITHDRAWAL) {
-                showMessage(`Le montant maximum de retrait est de ${formatAmount(MAX_WITHDRAWAL)}`);
-                withdrawalButton.disabled = true;
-            } else if (amount > currentBalance) {
-                showMessage(`Solde insuffisant. Votre solde actuel est de ${formatAmount(currentBalance)}`);
-                withdrawalButton.disabled = true;
-            } else if (!withdrawalCode) {
-                withdrawalButton.disabled = true;
-            } else {
-                document.getElementById('message').innerHTML = '';
-                withdrawalButton.disabled = false;
-            }
-        }
-
-        // Initialisation et écouteurs d'événements
+        // Event Listeners
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
             if (user) {
@@ -361,7 +343,6 @@
             }
         });
 
-        // Ajout des écouteurs d'événements
         document.getElementById('amount').addEventListener('input', updateWithdrawalSummary);
         document.getElementById('withdrawalCode').addEventListener('input', updateWithdrawalSummary);
         document.getElementById('withdrawal-button').addEventListener('click', processWithdrawal);
