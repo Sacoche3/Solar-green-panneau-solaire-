@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SOLAR GREEN REGISTER</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -16,24 +17,48 @@
         * {
             margin: 0;
             padding: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
             display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
             justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
             align-items: center;
             background: url('https://image.noelshack.com/fichiers/2024/52/6/1735412626-how-is-solar-energy-useful-to-us.jpg') center/cover no-repeat fixed;
             position: relative;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            body {
+                min-height: -webkit-fill-available;
+            }
         }
 
         body::before {
             content: '';
             position: fixed;
-            inset: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
         }
 
         .container {
@@ -41,23 +66,36 @@
             z-index: 1;
             width: 90%;
             max-width: 900px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
             display: flex;
             margin: 20px;
             border-radius: 15px;
             overflow: hidden;
             background: url('https://image.noelshack.com/fichiers/2024/52/6/1735412626-how-is-solar-energy-useful-to-us.jpg') center/cover;
+            -webkit-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .container::before {
             content: '';
             position: absolute;
-            inset: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             background: rgba(0, 0, 0, 0.7);
             z-index: 1;
         }
 
         .left-side {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
             flex: 1;
             padding: 40px;
             color: white;
@@ -70,11 +108,21 @@
             height: 120px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 50%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
             display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
             justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
             align-items: center;
             margin: 0 auto 30px;
             position: relative;
+            -webkit-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
@@ -82,6 +130,10 @@
             color: var(--primary-color);
             font-size: 2rem;
             font-weight: 700;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .left-side h2 {
@@ -89,9 +141,15 @@
             font-size: 2.2rem;
             position: relative;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .right-side {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
             flex: 1;
             padding: 40px;
             position: relative;
@@ -100,12 +158,17 @@
         }
 
         .tab-buttons {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
             display: flex;
             gap: 15px;
             margin-bottom: 30px;
         }
 
         .tab-button {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
             flex: 1;
             padding: 12px;
             border: none;
@@ -115,12 +178,24 @@
             font-weight: 600;
             font-size: 1rem;
             color: white;
-            transition: 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        .tab-button:focus {
+            outline: none;
+            -webkit-box-shadow: 0 0 0 3px var(--primary-shadow);
+            box-shadow: 0 0 0 3px var(--primary-shadow);
         }
 
         .tab-button.active {
             background: var(--primary-color);
             color: white;
+            -webkit-box-shadow: 0 4px 15px var(--primary-shadow);
             box-shadow: 0 4px 15px var(--primary-shadow);
         }
 
@@ -133,10 +208,13 @@
             position: absolute;
             left: 15px;
             top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
             transform: translateY(-50%);
             color: var(--primary-color);
             font-size: 1.1rem;
             z-index: 1;
+            pointer-events: none;
         }
 
         .input-group input {
@@ -145,9 +223,31 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             font-size: 1rem;
-            transition: 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
             background: rgba(255, 255, 255, 0.2);
             color: white;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .input-group input::-webkit-input-placeholder {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .input-group input::-moz-placeholder {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .input-group input:-ms-input-placeholder {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .input-group input::-ms-input-placeholder {
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .input-group input::placeholder {
@@ -158,6 +258,7 @@
             outline: none;
             border-color: var(--primary-color);
             background: rgba(255, 255, 255, 0.3);
+            -webkit-box-shadow: 0 0 0 3px var(--primary-shadow);
             box-shadow: 0 0 0 3px var(--primary-shadow);
         }
 
@@ -192,14 +293,26 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            -webkit-box-shadow: 0 4px 15px var(--primary-shadow);
             box-shadow: 0 4px 15px var(--primary-shadow);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            outline: none;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover, .submit-btn:focus {
+            -webkit-transform: translateY(-2px);
+            -ms-transform: translateY(-2px);
             transform: translateY(-2px);
+            -webkit-box-shadow: 0 6px 20px var(--primary-shadow);
             box-shadow: 0 6px 20px var(--primary-shadow);
             background: #ff5252;
+            outline: none;
         }
 
         .error-message { color: var(--error-color); }
@@ -215,18 +328,28 @@
         form {
             display: none;
             opacity: 0;
+            -webkit-transform: translateY(20px);
+            -ms-transform: translateY(20px);
             transform: translateY(20px);
-            transition: 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         form.active {
             display: block;
             opacity: 1;
+            -webkit-transform: translateY(0);
+            -ms-transform: translateY(0);
             transform: translateY(0);
         }
 
-        @media (max-width: 768px) {
+        @media screen and (max-width: 768px) {
             .container {
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: column;
                 flex-direction: column;
                 margin: 15px;
             }
@@ -243,6 +366,27 @@
             .left-side h2 {
                 font-size: 2rem;
             }
+
+            .input-group input {
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+        }
+
+        @media screen and (max-height: 600px) {
+            .container {
+                margin: 10px;
+            }
+
+            .left-side, .right-side {
+                padding: 20px;
+            }
+        }
+
+        /* Fix for iOS momentum scrolling */
+        @supports (-webkit-touch-callout: none) {
+            .container {
+                -webkit-overflow-scrolling: touch;
+            }
         }
     </style>
 </head>
@@ -255,55 +399,55 @@
 
         <div class="right-side">
             <div class="tab-buttons">
-                <button class="tab-button active" data-form="login">Connexion</button>
-                <button class="tab-button" data-form="signup">Inscription</button>
+                <button class="tab-button active" data-form="signup" type="button">Inscription</button>
+                <button class="tab-button" data-form="login" type="button">Connexion</button>
             </div>
 
             <div class="form-container">
-                <form id="loginFormData" class="active" data-type="login">
-                    <div class="input-group">
-                        <i class="fas fa-phone"></i>
-                        <input type="tel" id="loginTelephone" placeholder="Numéro de téléphone" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="loginPassword" placeholder="Mot de passe" required>
-                    </div>
-                    <p id="loginError" class="error-message"></p>
-                    <button type="submit" class="submit-btn">Se connecter</button>
-                </form>
-
-                <form id="signupFormData" data-type="signup">
+                <form id="signupFormData" class="active" data-type="signup" autocomplete="off" novalidate>
                     <div class="input-group">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="signupUsername" placeholder="Nom d'utilisateur" required>
+                        <input type="text" id="signupUsername" placeholder="Nom d'utilisateur" autocomplete="off" required>
                     </div>
                     <div class="input-group">
                         <i class="fas fa-phone"></i>
-                        <input type="tel" id="signupTelephone" placeholder="Numéro de téléphone" required>
+                        <input type="tel" id="signupTelephone" placeholder="Numéro de téléphone" autocomplete="off" pattern="[0-9]*" inputmode="numeric" required>
                     </div>
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="signupPassword" placeholder="Mot de passe" required>
+                        <input type="password" id="signupPassword" placeholder="Mot de passe" autocomplete="new-password" required>
                     </div>
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="confirmPassword" placeholder="Confirmer le mot de passe" required>
+                        <input type="password" id="confirmPassword" placeholder="Confirmer le mot de passe" autocomplete="new-password" required>
                     </div>
                     <div class="input-group">
                         <i class="fas fa-ticket"></i>
-                        <input type="text" id="referralCode" placeholder="Code de parrainage (optionnel)">
+                        <input type="text" id="referralCode" placeholder="Code de parrainage (optionnel)" autocomplete="off">
                     </div>
                     <div id="referralStatus" class="referral-status"></div>
                     <p id="signupError" class="error-message"></p>
                     <p id="signupSuccess" class="success-message"></p>
                     <button type="submit" class="submit-btn">Créer un compte</button>
                 </form>
+
+                <form id="loginFormData" data-type="login" autocomplete="off" novalidate>
+                    <div class="input-group">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="loginTelephone" placeholder="Numéro de téléphone" autocomplete="off" pattern="[0-9]*" inputmode="numeric" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Mot de passe" autocomplete="current-password" required>
+                    </div>
+                    <p id="loginError" class="error-message"></p>
+                    <button type="submit" class="submit-btn">Se connecter</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <script type="module">
+     <script type="module">
         // Import des modules Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
         import { 
@@ -467,7 +611,7 @@
                         username,
                         email,
                         phoneNumber: telephone,
-                        balance: referrerData ? 600 : 0, // Bonus de parrainage
+                        balance: referrerData ? 500 : 0, // Bonus de parrainage
                         referralCode: newReferralCode,
                         referredBy: referrerData?.userId || null,
                         createdAt: Date.now()
@@ -590,6 +734,6 @@
                 console.log("Utilisateur déconnecté");
             }
         });
-    </script>
+    </script> 
 </body>
 </html>
