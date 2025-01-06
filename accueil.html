@@ -1025,7 +1025,7 @@ async function processReferralBonus(amount, userId) {
         if (!userData.referredBy) return;
 
         const referrerUid = userData.referredBy;
-        const bonusAmount = amount * 0.10; // 10% de bonus
+        const bonusAmount = amount * 0.0; // 00% de bonus
 
         const referrerRef = ref(db, `users/${referrerUid}`);
         const referrerSnapshot = await get(referrerRef);
