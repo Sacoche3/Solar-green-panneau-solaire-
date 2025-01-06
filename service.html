@@ -3,27 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Client</title>
+    <title>Service Client - Solar Green</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
 
         * {
             margin: 0;
@@ -33,10 +16,7 @@
         }
 
         body {
-            background-image: url('https://image.noelshack.com/fichiers/2025/01/6/1735999097-how-is-solar-energy-useful-to-us.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: linear-gradient(135deg, #1a4731, #2d8a54);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -46,26 +26,27 @@
 
         .container {
             width: 100%;
-            max-width: 1000px;
-            animation: fadeIn 1s ease-out;
+            max-width: 1200px;
         }
 
         .service-card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
             padding: 3rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.3);
         }
 
         .title {
             text-align: center;
-            font-size: 2.5rem;
-            color: #333;
+            font-size: 2.8rem;
+            color: #1a4731;
             margin-bottom: 2rem;
             position: relative;
             padding-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .title::after {
@@ -74,30 +55,36 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
+            width: 120px;
             height: 4px;
-            background: linear-gradient(45deg, #0088cc, #29b6f6);
+            background: linear-gradient(45deg, #2d8a54, #4CAF50);
             border-radius: 2px;
         }
 
         .hours {
             text-align: center;
-            background: linear-gradient(45deg, #0088cc, #29b6f6);
+            background: linear-gradient(45deg, #2d8a54, #4CAF50);
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-            font-size: 1.2rem;
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            margin: 2rem auto;
+            font-size: 1.3rem;
             font-weight: 500;
-            box-shadow: 0 4px 15px rgba(0,136,204,0.2);
-            animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(45,138,84,0.3);
+            max-width: 450px;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .hours:hover {
+            transform: translateY(-5px);
         }
 
         .contact-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
+            margin: 3rem 0;
         }
 
         .contact-card {
@@ -105,62 +92,106 @@
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
-            animation: float 6s infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .contact-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
         .contact-title {
-            font-size: 1.5rem;
-            color: #333;
+            font-size: 1.6rem;
+            color: #1a4731;
             margin-bottom: 1.5rem;
+            font-weight: 600;
         }
 
-        .telegram-btn {
+        .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #0088cc, #29b6f6);
+            width: 100px;
+            height: 100px;
             color: white;
             border-radius: 50%;
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin: 1rem 0;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0,136,204,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .telegram-btn:hover {
+        .telegram-btn {
+            background: linear-gradient(45deg, #0088cc, #29b6f6);
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+        }
+
+        .btn:hover {
             transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 8px 25px rgba(0,136,204,0.4);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
         .contact-description {
-            color: #666;
             margin-top: 1rem;
+            color: #666;
             font-size: 1.1rem;
-            line-height: 1.6;
+        }
+
+        .solar-description {
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            background: linear-gradient(45deg, #1a4731, #2d8a54);
+            color: white;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            box-shadow: 0 4px 15px rgba(26,71,49,0.3);
+        }
+
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         @media (max-width: 768px) {
             .service-card {
-                padding: 2rem;
+                padding: 1.5rem;
             }
 
             .title {
                 font-size: 2rem;
             }
 
-            .contact-container {
-                grid-template-columns: 1fr;
+            .contact-card {
+                padding: 1.5rem;
+            }
+
+            .floating-whatsapp {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .btn {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
             }
         }
     </style>
@@ -169,7 +200,7 @@
     <div class="container">
         <div class="service-card">
             <h1 class="title">Centre d'aide</h1>
-            
+
             <div class="hours">
                 <i class="far fa-clock"></i> Heures d'ouverture : 8H00 - 19H00
             </div>
@@ -177,25 +208,52 @@
             <div class="contact-container">
                 <div class="contact-card">
                     <h2 class="contact-title">Assistance N°1</h2>
-                    <a href="https://t.me/SOLARASSISTANT0001" class="telegram-btn">
+                    <a href="https://t.me/SOLARASSISTANT0001" class="btn telegram-btn">
                         <i class="fab fa-telegram-plane"></i>
                     </a>
                     <p class="contact-description">
-                        Support pour les paiements MTN, Moov et USDT
+                        Support MTN, Moov et USDT
+                    </p>
+                </div>
+
+                <div class="contact-card">
+                    <h2 class="contact-title">Groupe senior</h2>
+                    <a href="https://t.me/+hQnrYDN-obsxYjRk" class="btn telegram-btn">
+                        <i class="fab fa-telegram-plane"></i>
+                    </a>
+                    <p class="contact-description">
+                        Rejoignez notre groupe
                     </p>
                 </div>
 
                 <div class="contact-card">
                     <h2 class="contact-title">Assistance N°2</h2>
-                    <a href="https://t.me/assistancen17" class="telegram-btn">
+                    <a href="https://t.me/assistancen17" class="btn telegram-btn">
                         <i class="fab fa-telegram-plane"></i>
                     </a>
                     <p class="contact-description">
-                        Support pour les paiements Orange Wave
+                        Support Orange Wave
                     </p>
                 </div>
             </div>
+
+            <div class="solar-description">
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">🌟 Solar Green - L'Énergie du Futur 🌟</h3>
+                Découvrez l'excellence en énergie solaire avec Solar Green. Nos panneaux solaires de qualité supérieure 
+                vous garantissent une production d'énergie optimale et durable. Avec plus de 1000 installations réussies 
+                et une garantie de 25 ans, nous sommes votre partenaire de confiance pour un avenir plus vert. 
+                Certifiés aux normes internationales, nous vous offrons des solutions écologiques et économiques 
+                pour votre transition énergétique.
+                <p style="margin-top: 1.5rem; font-weight: 600; font-size: 1.1rem;">
+                    💚 Qualité Premium | ⚡ Performance Garantie | 🌍 Respect de l'Environnement
+                </p>
+            </div>
         </div>
     </div>
+
+    <!-- Bouton WhatsApp flottant -->
+    <a href="https://chat.whatsapp.com/JKw17cWDrzHBEsA6RCB9TD" class="btn whatsapp-btn floating-whatsapp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 </body>
 </html>
