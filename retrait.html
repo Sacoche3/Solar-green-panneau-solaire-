@@ -161,7 +161,7 @@
                     <span id="requested-amount">0 FCFA</span>
                 </div>
                 <div class="info-item">
-                    <span>Frais (10%):</span>
+                    <span>Frais (15%):</span>
                     <span id="fees-amount">0 FCFA</span>
                 </div>
                 <div class="info-item">
@@ -198,7 +198,7 @@
         const database = getDatabase(app);
 
         // Constants
-        const MIN_WITHDRAWAL = 1000;
+        const MIN_WITHDRAWAL = 1500;
         const MAX_WITHDRAWAL = 850000;
         let currentBalance = 0;
         let currentUser = null;
@@ -247,7 +247,7 @@
             const withdrawalCode = document.getElementById('withdrawalCode').value;
             
             if (amount > 0) {
-                const fees = Math.round(amount * 0.10);
+                const fees = Math.round(amount * 0.15);
                 const totalAmount = amount - fees;
 
                 document.getElementById('requested-amount').textContent = formatAmount(amount);
@@ -305,7 +305,7 @@
                 return;
             }
 
-            const fees = Math.round(amount * 0.10);
+            const fees = Math.round(amount * 0.15);
             const totalAmount = amount - fees;
             const newBalance = currentBalance - amount;
 
